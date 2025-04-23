@@ -10,12 +10,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'git-ssh-key', url: 'git@github.com:yourusername/flask_app.git', branch: 'main'
+                git credentialsId: '5b1570b7-f35b-43bd-b452-16f2c6f990b1', url: 'git@github.com/javajayjuice/flask_app.git', branch: 'main'
             }
         }
         stage('Install Dependencies') {
             steps {
-                sh '''
+                bat '''
                     python -m venv venv
                     source venv/bin/activate
                     pip install -r requirements.txt
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh '''
+                bat '''
                     source venv/bin/activate
                     pytest tests/
                 '''
@@ -32,7 +32,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                sh '''
+                bat '''
                     source venv/bin/activate
                     pylint app.py > pylint-report.txt || true
                     sonar-scanner \
